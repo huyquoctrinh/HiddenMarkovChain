@@ -21,14 +21,14 @@ class HMM:
         o_len = len(observations)
 
         if( (s_len,o_len)!= self.em_prob.shape ):
-            print("Input has incorrect dimensions, Correct dimensions is ({},{})".format(s_len,o_len))
+            print("Input 1 has incorrect dimensions, Correct dimensions is ({},{})".format(s_len,o_len))
             return None
 
         if( (s_len,s_len)!= self.trans_prob.shape ):
-            print("Input has incorrect dimensions, Correct dimensions is ({},{})".format(s_len,s_len))
+            print("Input 2 has incorrect dimensions, Correct dimensions is ({},{})".format(s_len,s_len))
             return None
         if( s_len!= (self.start_prob).shape[1]):
-            print("Input has incorrect dimensions, Correct dimensions is,",s_len)
+            print("Input 3 has incorrect dimensions, Correct dimensions is,",s_len)
 
         # No negative numbers
         if(not( (self.start_prob>=0).all() )):
