@@ -1,5 +1,5 @@
 # HiddenMarkovChain
-Simple project with Hidden Markov
+Simple project with Hidden Markov on Dice Problem
 ## SETUP
 Install packages from requirements.txt file
 ## RUN DEMO
