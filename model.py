@@ -64,7 +64,7 @@ class HMM:
         self.obs_map = {}
         for i,o in enumerate(self.observations):
             self.obs_map[o] = i
-
+    #Forward prob test
     def forward(self,observations):
         total_stages = len(observations)
 
@@ -78,7 +78,7 @@ class HMM:
 
         total_prob = alpha.sum()
         return ( total_prob )
-
+    #viterbi algorithm implemtationimplemtation
     def viterbi(self,observations):
         total_stages = len(observations)
         num_states = len(self.states)
@@ -103,7 +103,7 @@ class HMM:
         best_path = old_path[:,final_max].tolist()
         best_path_map = [ self.state_map[i] for i in best_path]
         return best_path_map
-
+    #Baum-Welch implementatinalgorithm implementatin
     def BW(self,observation_list, iterations, quantities):
         obs_size = len(observation_list)
         prob = float('inf')
@@ -129,7 +129,7 @@ class HMM:
             else:
                 return self.em_prob, self.trans_prob , self.start_prob
         return self.em_prob, self.trans_prob , self.start_prob
-
+    #Tuning parameter 
     def alpha_cal(self,observations):
         num_states = self.em_prob.shape[0]
         total_stages = len(observations)
@@ -170,7 +170,7 @@ class HMM:
         delta1 = delta1/c.transpose()
 
         return delta1
-
+    #Train emission for BW
     def train_emission(self,observations):
         new_em_prob = np.asmatrix(np.zeros(self.em_prob.shape))    
         selectCols=[]
@@ -184,7 +184,7 @@ class HMM:
             for j in range(self.em_prob.shape[1]):
                 new_em_prob[i,j] = np.sum(delta[i,selectCols[j]])/totalProb[i]
         return new_em_prob
-
+    #Train transition for BW
     def train_transition(self,observations):
         new_trans_prob = np.asmatrix(np.zeros(self.trans_prob.shape))
         alpha,c = self.alpha_cal(observations)
@@ -197,11 +197,12 @@ class HMM:
         for i in range(self.trans_prob.shape[0]):
             new_trans_prob[i,:] = new_trans_prob[i,:]/np.sum(new_trans_prob[i,:])
         return new_trans_prob
-
+    #Train start_prob for BW
     def train_start_prob(self,observations):
         delta = self.forward_backward(observations)
         norm = sum(delta[:,0])
         return delta[:,0].transpose()/norm
+    #calculate log 
     def log_prob(self,observations_list, quantities): 
         prob = 0
         for q,obs in enumerate(observations_list):
